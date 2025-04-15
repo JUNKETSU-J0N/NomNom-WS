@@ -14,7 +14,7 @@ Frontend (Angular)
 Backend (Spring Boot)
 │
 ├── REST-Controller / API Layer
-├── Authentifizierungsservice (Spring Security / Keycloak)
+├── Authentifizierungsservice (Keycloak)
 ├── Rezept- und Swipe-Verwaltung
 ├── Nutzerprofilverwaltung
 ├── Einkaufslistenservice
@@ -22,5 +22,5 @@ Backend (Spring Boot)
 
 Datenbank (PostgreSQL)
 │
-└── Tabellen: Nutzer, Rezepte, Präferenzen, Inventar, Einkaufslisten, Swipe-Tracking
+└── Tabellen: Nutzer, Rezepte, Präferenzen, Inventar, Einkaufslisten, Swipe-Tracking, Zutaten, Unverträglichkeiten
 ```
