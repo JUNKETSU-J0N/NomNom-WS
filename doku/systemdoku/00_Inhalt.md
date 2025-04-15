@@ -15,10 +15,11 @@ Hier findest du die vollständige arc42-Systemdoku als einzelne, thematisch sort
 6. [06_Laufzeitsicht.md – Laufzeitsicht](./06_Laufzeitsicht.md)
 7. [07_Verteilungssicht.md – Verteilungssicht](./07_Verteilungssicht.md)
 8. [08_Querschnittliche_Konzepte.md – Querschnittliche Konzepte](./08_querschnittliche-Konzepte.md)
-9. [09_Architekturentscheidungen.md – Architekturentscheidungen](./09_Entwurfsentscheidungen.md)
+9. [09_Architekturentscheidungen.md – Architekturentscheidungen](./09_Architekturentscheidungen.md)
 10. [10_Qualitaetsanforderungen.md – Qualitätsanforderungen](./10_Qualitaetsszenarien.md)
 11. [11_Risiken_Technische_Schulden.md – Risiken & technische Schulden](./11_Risiken-und-technische-Schulden.md)
 12. [12_Glossar.md – Glossar](./12_Glossar.md)
+13. [13_Datenbankmodell.md – Glossar](./13_Datenbankmodell.md)
 ---
 
 ## 🛠️ Hinweise zur Verwendung
