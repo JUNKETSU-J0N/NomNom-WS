@@ -13,4 +13,4 @@
 | **Wartbarkeit**       | Der Code soll modular und nachvollziehbar aufgebaut sein. |
 
 ### 1.3 Stakeholder
-(siehe Stakeholderanalyse.md)
+(siehe projektdoku/Stakeholderanalyse.md)
