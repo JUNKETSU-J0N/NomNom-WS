@@ -79,9 +79,9 @@ VALUES
 -- === USER-REZEPTE ===
 INSERT INTO user_recipe (user_id, recipe_id, notes, evaluation)
 VALUES
-    (1, 1, 'Super lecker', '5 Sterne'),
-    (2, 2, 'Bisschen zu käsig', '3 Sterne'),
-    (1, 4, 'Lieblingsrezept!', '5 Sterne');
+    (1, 1, 'Super lecker', 'YES'),
+    (2, 2, 'Bisschen zu käsig', 'DISLIKE'),
+    (1, 4, 'Lieblingsrezept!', 'FAVORITE');
 
 -- === EINKAUFSLISTEN UND ITEMS ===
 INSERT INTO shopping_list (id, user_id)
