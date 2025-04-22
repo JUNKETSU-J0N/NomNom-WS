@@ -6,8 +6,6 @@ services:
       POSTGRES_USER: nomnom
       POSTGRES_PASSWORD: nomnom
       POSTGRES_INITDB_ARGS: "--locale=en_US.UTF-8"
-#      nur für Migrationsskript erstellung
-      POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
