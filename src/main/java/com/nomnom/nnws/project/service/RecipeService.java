@@ -11,5 +11,6 @@ public interface RecipeService {
     RecipeResponse getRecipeById(Long id);
     void deleteRecipe(Long id);
     RecipeResponse updateRecipe(Long id, RecipeRequest request);
+    List<RecipeResponse> searchByNameAndDescription(String name);
 
 }

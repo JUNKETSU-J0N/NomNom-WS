@@ -42,5 +42,10 @@ public class RecipeController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<RecipeResponse>> searchByNameAndDescription(@RequestParam("searchTerm") String searchTerm) {
+        return ResponseEntity.ok(recipeService.searchByNameAndDescription(searchTerm));
+    }
+
 }
 
