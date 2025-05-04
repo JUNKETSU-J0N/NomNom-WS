@@ -1,5 +1,6 @@
 package com.nomnom.nnws.project.dto;
 
+import com.nomnom.nnws.project.enums.IngredientType;
 import com.nomnom.nnws.project.enums.Unit;
 
 import lombok.AllArgsConstructor;
@@ -9,11 +10,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShoppingItemDto {
+public class IngredientResponse {
     private Long id;
-    private Long shoppingListId;
-    private IngredientResponse ingredient;
-    private double amount;
+    private String name;
+    private IngredientType type;
     private Unit unit;
-    private boolean addad;
 }

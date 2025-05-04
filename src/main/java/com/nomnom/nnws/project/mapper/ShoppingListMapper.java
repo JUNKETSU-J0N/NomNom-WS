@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
-import com.nomnom.nnws.project.dto.IngredientDto;
+import com.nomnom.nnws.project.dto.IngredientResponse;
 import com.nomnom.nnws.project.dto.ShoppingItemDto;
 //import com.nomnom.nnws.project.dto.ShoppingListRequestDto;
 import com.nomnom.nnws.project.dto.ShoppingListResponse;
@@ -20,7 +20,7 @@ public class ShoppingListMapper {
                 new ShoppingItemDto(
                     si.getId(),
                     si.getShoppingList().getId(),
-                    new IngredientDto(
+                    new IngredientResponse(
                         si.getIngredient().getId(),
                         si.getIngredient().getName(),
                         si.getIngredient().getType(),

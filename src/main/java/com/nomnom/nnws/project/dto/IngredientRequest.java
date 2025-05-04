@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class IngredientDto {
-    private Long id;
+public class IngredientRequest {
     private String name;
     private IngredientType type;
     private Unit unit;
