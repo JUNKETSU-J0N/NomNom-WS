@@ -7,10 +7,11 @@ import org.springframework.stereotype.Component;
 
 import com.nomnom.nnws.project.dto.IngredientResponse;
 import com.nomnom.nnws.project.dto.ShoppingItemDto;
-//import com.nomnom.nnws.project.dto.ShoppingListRequestDto;
+import com.nomnom.nnws.project.dto.ShoppingListRequest;
 import com.nomnom.nnws.project.dto.ShoppingListResponse;
-//import com.nomnom.nnws.project.entity.ShoppingItem;
+import com.nomnom.nnws.project.entity.ShoppingItem;
 import com.nomnom.nnws.project.entity.ShoppingList;
+import com.nomnom.nnws.project.entity.User;
 
 @Component
 public class ShoppingListMapper {
@@ -33,9 +34,10 @@ public class ShoppingListMapper {
         return new ShoppingListResponse(shoppingList.getId(), shoppingList.getUser().getId(), shoppingItemDtos);
     }
 
-    /* public ShoppingList toEntity(ShoppingListRequestDto request, List<ShoppingItem> shoppingItems) {
+    public ShoppingList toEntity(ShoppingListRequest request, List<ShoppingItem> shoppingItems, User user) {
         return ShoppingList.builder()
             .items(shoppingItems)
-            .user(null)
-    } */
+            .user(user)
+            .build();
+    }
 }

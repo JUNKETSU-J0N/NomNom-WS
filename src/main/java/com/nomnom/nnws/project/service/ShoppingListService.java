@@ -6,7 +6,7 @@ import com.nomnom.nnws.project.dto.ShoppingListRequest;
 import com.nomnom.nnws.project.dto.ShoppingListResponse;
 
 public interface ShoppingListService {
-    ShoppingListRequest createShoppingList(ShoppingListRequest request);
+    ShoppingListResponse createShoppingList(ShoppingListRequest request);
     List<ShoppingListResponse> getAllShoppingLists();
     ShoppingListResponse getShoppingListById(Long id);
     void deleteShoppingList(Long id);
