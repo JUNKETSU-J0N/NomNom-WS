@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.nomnom.nnws.project.dto.UserRecipeRequest;
 import com.nomnom.nnws.project.dto.UserRecipeResponse;
+import com.nomnom.nnws.project.entity.Recipe;
+import com.nomnom.nnws.project.entity.User;
 import com.nomnom.nnws.project.entity.UserRecipe;
 import com.nomnom.nnws.project.entity.UserRecipeId;
 import com.nomnom.nnws.project.mapper.UserRecipeMapper;
@@ -31,9 +33,19 @@ public class UserRecipeServiceImpl implements UserRecipeService {
     @Transactional
     @Override
     public UserRecipeResponse createUserRecipe(UserRecipeRequest request) {
+        Recipe recipe = recipeRepo.findById(request.getRecipeId())
+            .orElseThrow(() -> new RuntimeException("Recipe not found"));
+        User user = userRepo.findById(request.getUserId())
+            .orElseThrow(() -> new RuntimeException("User not found"));
         
-        
+        UserRecipe ur = UserRecipe.builder()
+            .user(user)
+            .recipe(recipe)
+            .notes(request.getNotes())
+            .evaluation(request.getEvaluation())
+            .build();
 
+        return mapper.toResponse(urRepo.save(ur));
     }
 
     @Override
@@ -65,8 +77,14 @@ public class UserRecipeServiceImpl implements UserRecipeService {
     @Transactional
     @Override
     public UserRecipeResponse updateUserRecipe(Long userId, Long recipeId, UserRecipeRequest request) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateUserRecipe'");
+        UserRecipeId urId = new UserRecipeId(userId, recipeId);
+        UserRecipe ur = urRepo.findById(urId)
+            .orElseThrow(() -> new RuntimeException("Userrecipe not found"));
+
+        ur.setNotes(request.getNotes());
+        ur.setEvaluation(request.getEvaluation());
+
+        return mapper.toResponse(ur);
     }
     
 }

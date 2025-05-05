@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRecipeRequest {
+    private Long userId;
+    private Long recipeId;
     private String notes;
     private EvaluationValue evaluation;
 }
