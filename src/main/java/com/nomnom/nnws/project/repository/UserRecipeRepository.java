@@ -11,7 +11,9 @@ import com.nomnom.nnws.project.entity.UserRecipe;
 import com.nomnom.nnws.project.entity.UserRecipeId;
 
 public interface UserRecipeRepository extends JpaRepository<UserRecipe, UserRecipeId> {
-
+/* 
+//TODI: also
+//keine ahnung ob das wichtig ist, aber! wenn ja dann muss irgendwas im service (glaube ich) wieder gefixt werden
     @Modifying
     @Query("DELETE FROM UserRecipeId ri WHERE ri.recipe.id = :userRecipeId")
     void deleteAllByUserRecipeId(@Param("userRecipeId") Long userRecipeId);
@@ -27,5 +29,5 @@ public interface UserRecipeRepository extends JpaRepository<UserRecipe, UserReci
 
     @Modifying
     @Query("SELECT FROM UserRecipe ur WHERE ur.recipe.id = :recipeId")
-    List<UserRecipe> findAllByRecipeId(@Param("recipeId") Long recipeId);
+    List<UserRecipe> findAllByRecipeId(@Param("recipeId") Long recipeId); */
 }
