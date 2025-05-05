@@ -89,6 +89,7 @@ public class ShoppingListImpl implements ShoppingListService{
         listrepo.deleteById(id);
     }
 
+    @Transactional
     @Override
     public ShoppingListResponse updateShoppingList(Long id, ShoppingListRequest request) {
         ShoppingList list = listrepo.findById(id)
