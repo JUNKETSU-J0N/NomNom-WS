@@ -2,8 +2,8 @@ package com.nomnom.nnws.project.enums;
 
 public enum EvaluationValue {
     FAVORITE,
-    YES,
+    LIKE,
     NEUTRAL,
-    NO,
+    BLOCK,
     DISLIKE
 }
