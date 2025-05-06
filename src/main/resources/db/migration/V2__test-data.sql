@@ -1,5 +1,5 @@
 -- === USERS ===
-INSERT INTO appuser (id, name, email, password, preference)
+INSERT INTO app_user (id, name, email, password, preference)
 VALUES
     (1, 'Anna Beispiel', 'anna@example.com', 'pass123', 'VEGETARIAN'),
     (2, 'Bob Test', 'bob@example.com', 'pass456', 'VEGAN');
@@ -91,6 +91,6 @@ VALUES
 
 INSERT INTO shopping_item (id, shopping_list_id, ingredient_id, amount, unit, added)
 VALUES
-    (1, 1, 1, 500, 'g', FALSE),
-    (2, 1, 2, 200, 'ml', TRUE),
-    (3, 2, 5, 300, 'g', FALSE);
+    (1, 1, 1, 500, 'GRAM', FALSE),
+    (2, 1, 2, 200, 'MILLILITER', TRUE),
+    (3, 2, 5, 300, 'GRAM', FALSE);
