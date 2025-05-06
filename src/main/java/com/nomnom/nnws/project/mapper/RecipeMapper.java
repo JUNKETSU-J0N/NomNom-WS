@@ -22,13 +22,20 @@ public class RecipeMapper {
                 )
         ).collect(Collectors.toList());
 
-        return new RecipeResponse(recipe.getId(), recipe.getName(), recipe.getDescription(), ingredientDtos);
+        return new RecipeResponse(
+                recipe.getId(),
+                recipe.getName(),
+                recipe.getDescription(),
+                recipe.getPreferenceType(),
+                ingredientDtos
+        );
     }
 
     public Recipe toEntity(RecipeRequest request, List<RecipeIngredient> recipeIngredients) {
         return Recipe.builder()
                 .name(request.getName())
                 .description(request.getDescription())
+                .preferenceType(request.getPreferenceType())
                 .ingredients(recipeIngredients)
                 .build();
     }

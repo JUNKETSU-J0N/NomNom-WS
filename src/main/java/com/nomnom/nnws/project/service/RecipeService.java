@@ -12,4 +12,7 @@ public interface RecipeService {
     void deleteRecipe(Long id);
     RecipeResponse updateRecipe(Long id, RecipeRequest request);
     List<RecipeResponse> searchByNameAndDescription(String name);
+    List<RecipeResponse> getAllRecipesFilteredAndShuffled(Long userId);
+
+
 }

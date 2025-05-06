@@ -47,5 +47,10 @@ public class RecipeController {
         return ResponseEntity.ok(recipeService.searchByNameAndDescription(searchTerm));
     }
 
+    @GetMapping("/shuffled")
+    public ResponseEntity<List<RecipeResponse>> getAllShuffled(@RequestParam("userId") Long userId) {
+        return ResponseEntity.ok(recipeService.getAllRecipesFilteredAndShuffled(userId));
+    }
+
 }
 
