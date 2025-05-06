@@ -10,9 +10,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "app_user")
 public class User {
     @Id
     @GeneratedValue
+   // @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 50)
     private Long id;
     private String name;
     private String email;
@@ -29,4 +31,5 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private ShoppingList shoppingList;
+
 }
