@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "appuser")
+@Table(name = "app_user")
 public class User {
     @Id
     @GeneratedValue

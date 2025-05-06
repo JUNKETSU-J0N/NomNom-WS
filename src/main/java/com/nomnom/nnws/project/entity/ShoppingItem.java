@@ -18,6 +18,7 @@ public class ShoppingItem {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "shopping_list_id")
     private ShoppingList shoppingList;
 
     @ManyToOne
