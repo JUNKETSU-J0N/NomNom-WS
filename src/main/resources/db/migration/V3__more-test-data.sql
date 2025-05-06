@@ -83,3 +83,7 @@ VALUES
     (48, 13, 200, 'GRAM'), (48, 10, 50, 'MILLILITER'), (48, 4, 40, 'GRAM'),
     (49, 13, 200, 'GRAM'), (49, 2, 100, 'MILLILITER'),
     (50, 5, 250, 'GRAM'), (50, 14, 40, 'GRAM'), (50, 4, 30, 'GRAM');
+
+UPDATE recipe SET preference_type = 'MEAT_LOVER' WHERE id IN (1,3,4,8,11,20,28,30,31,32,42,45,48);
+UPDATE recipe SET preference_type = 'VEGETARIAN' WHERE id IN (2,5,6,9,10,12,13,14,15,16,17,18,19,21,22,24,25,26,27,29,33,35,36,37,38,39,40,41,43,44,46,47,50);
+UPDATE recipe SET preference_type = 'VEGAN' WHERE id IN (7,23,34,49);

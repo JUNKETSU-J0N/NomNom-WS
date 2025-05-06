@@ -1,5 +1,5 @@
 -- === USERS ===
-INSERT INTO "user" (id, name, email, password, preference)
+INSERT INTO appuser (id, name, email, password, preference)
 VALUES
     (1, 'Anna Beispiel', 'anna@example.com', 'pass123', 'VEGETARIAN'),
     (2, 'Bob Test', 'bob@example.com', 'pass456', 'VEGAN');

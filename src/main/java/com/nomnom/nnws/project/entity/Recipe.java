@@ -1,5 +1,6 @@
 package com.nomnom.nnws.project.entity;
 
+import com.nomnom.nnws.project.enums.PreferenceType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,4 +24,7 @@ public class Recipe {
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RecipeIngredient> ingredients;
+
+    @Enumerated(EnumType.STRING)
+    private PreferenceType preferenceType;
 }
