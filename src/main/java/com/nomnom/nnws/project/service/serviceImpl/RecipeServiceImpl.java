@@ -111,4 +111,28 @@ public class RecipeServiceImpl implements RecipeService {
 
         recipeRepo.deleteById(id);
     }
+
+    @Override
+    public List<RecipeResponse> searchByNameAndDescription(String searchTerm) {
+        // Suchbegriffe aufsplitten (bei mehreren Leerzeichen)
+        String[] searchTerms = searchTerm.split("\\s+");
+
+        // Bei jedem Suchbegriff eine Abfrage starten
+        List<Recipe> results = recipeRepo.findAll().stream()
+                .filter(recipe -> {
+                    boolean matches = true;
+                    for (String term : searchTerms) {
+                        matches &= (recipe.getName().toLowerCase().contains(term.toLowerCase()) ||
+                                recipe.getDescription().toLowerCase().contains(term.toLowerCase()));
+                    }
+                    return matches;
+                })
+                .collect(Collectors.toList());
+
+        // Mapping in Response-Objekte
+        return results.stream()
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
+    }
+
 }
