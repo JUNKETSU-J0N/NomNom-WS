@@ -36,9 +36,14 @@ public class UserRecipeController {
         return ResponseEntity.ok(urService.getUserRecipeByUserIdAndRecipeId(userId, recipeId));
     }
 
+//    @PutMapping("/{userId}/{recipeId}")
+//    public ResponseEntity<UserRecipeResponse> updateUserRecipe(@PathVariable Long userId, @PathVariable Long recipeId, @RequestBody UserRecipeRequest request) {
+//        return ResponseEntity.ok(urService.updateUserRecipe(userId, recipeId, request));
+//    }
+
     @PutMapping("/{userId}/{recipeId}")
     public ResponseEntity<UserRecipeResponse> updateUserRecipe(@PathVariable Long userId, @PathVariable Long recipeId, @RequestBody UserRecipeRequest request) {
-        return ResponseEntity.ok(urService.updateUserRecipe(userId, recipeId, request));
+        return ResponseEntity.ok(urService.updateOrCreateUserRecipe(userId, recipeId, request));
     }
 
     @DeleteMapping("/{userId}/{recipeId}")

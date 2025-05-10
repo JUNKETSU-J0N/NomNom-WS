@@ -3,6 +3,7 @@ package com.nomnom.nnws.project.service.serviceImpl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.nomnom.nnws.project.dto.UserRecipeRequest;
@@ -86,5 +87,25 @@ public class UserRecipeServiceImpl implements UserRecipeService {
 
         return mapper.toResponse(ur);
     }
-    
+
+    @Override
+    @Transactional
+    public UserRecipeResponse updateOrCreateUserRecipe(Long userId, Long recipeId, UserRecipeRequest newData) {
+        return urRepo.findById(new UserRecipeId(userId, recipeId))
+                .map(existing -> {
+                    // Update bestehender Felder
+                    existing.setNotes(newData.getNotes());
+                    existing.setEvaluation(newData.getEvaluation());
+                    urRepo.save(existing);
+                    return new UserRecipeResponse(new UserRecipeId(userId, recipeId), userId, recipeId, newData.getNotes(), newData.getEvaluation());
+                })
+                .orElseGet(() -> {
+                    User tempUser = userRepo.findById(newData.getUserId()).orElseThrow(EntityNotFoundException::new);
+                    Recipe tempRecipe = recipeRepo.findById(newData.getRecipeId()).orElseThrow(EntityNotFoundException::new);
+                    UserRecipe ur = new UserRecipe(tempUser, tempRecipe, newData.getNotes(), newData.getEvaluation());
+                    urRepo.save(ur);
+                    return new UserRecipeResponse(new UserRecipeId(userId, recipeId), userId, recipeId, newData.getNotes(), newData.getEvaluation());
+                });
+    }
+
 }

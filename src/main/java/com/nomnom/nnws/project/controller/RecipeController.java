@@ -52,5 +52,10 @@ public class RecipeController {
         return ResponseEntity.ok(recipeService.getAllRecipesFilteredAndShuffled(userId));
     }
 
+    @GetMapping("/check-match")
+    public ResponseEntity<List<RecipeResponse>> checkMatch(@RequestParam("userId") Long userId) {
+        return ResponseEntity.ok(recipeService.checkMatch(userId));
+
+    }
 }
 

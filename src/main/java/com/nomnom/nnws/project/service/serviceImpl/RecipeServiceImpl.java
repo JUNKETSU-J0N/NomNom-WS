@@ -3,10 +3,7 @@ package com.nomnom.nnws.project.service.serviceImpl;
 import com.nomnom.nnws.project.dto.RecipeIngredientDto;
 import com.nomnom.nnws.project.dto.RecipeRequest;
 import com.nomnom.nnws.project.dto.RecipeResponse;
-import com.nomnom.nnws.project.entity.Ingredient;
-import com.nomnom.nnws.project.entity.Recipe;
-import com.nomnom.nnws.project.entity.RecipeIngredient;
-import com.nomnom.nnws.project.entity.User;
+import com.nomnom.nnws.project.entity.*;
 import com.nomnom.nnws.project.enums.EvaluationValue;
 import com.nomnom.nnws.project.enums.PreferenceType;
 import com.nomnom.nnws.project.mapper.RecipeMapper;
@@ -208,5 +205,12 @@ public class RecipeServiceImpl implements RecipeService {
         return filteredRecipes.stream()
                 .map(mapper::toResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RecipeResponse> checkMatch(Long userId) {
+        List<UserRecipe> ur = this.userRecipeRepo.findByUserIdAndEvaluationIn(userId, List.of(EvaluationValue.LIKE, EvaluationValue.FAVORITE));
+        List<Recipe> recipes = ur.stream().map(UserRecipe::getRecipe).collect(Collectors.toList());
+        return recipes.stream().map(mapper::toResponse).collect(Collectors.toList());
     }
 }
