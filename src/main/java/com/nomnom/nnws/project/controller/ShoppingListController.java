@@ -11,6 +11,7 @@ import com.nomnom.nnws.project.dto.ShoppingListResponse;
 import com.nomnom.nnws.project.service.ShoppingListService;
 import com.nomnom.nnws.project.service.UserService;
 
+import io.quarkus.logging.Log;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -36,6 +37,7 @@ public class ShoppingListController {
     @GetMapping("/{id}")
     public ResponseEntity<ShoppingListResponse> getById(@RequestHeader("Authorization")String authHeader,@PathVariable Long id) {   
         String userid = appuserService.getCurrentUserKeycloakId(authHeader);
+        System.out.println(userid);
         if (userid == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }else{
