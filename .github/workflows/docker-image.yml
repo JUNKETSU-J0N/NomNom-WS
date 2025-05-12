@@ -1,28 +1,30 @@
-name: Java CI with Tests
+name: Angular Tests
 
 on:
   push:
     branches:
-      - '*'  # Führt den Workflow bei jedem Push aus
+      - '*'
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          java-version: '17'
-          distribution: 'temurin'
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: |
+          npm install
 
       - name: Run Tests
-        working-directory: NomNom-WS
-        run: mvn clean test -q
+        run: |
+          npm run test -- --watch=false --code-coverage --browsers=ChromeHeadless,FirefoxHeadless
+        env:
+          CI: true
 
-      - name: "Optional: Build JAR"
-        working-directory: NomNom-WS
-        run: mvn clean package -q
