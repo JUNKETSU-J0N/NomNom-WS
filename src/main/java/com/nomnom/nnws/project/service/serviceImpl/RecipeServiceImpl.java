@@ -44,7 +44,7 @@ public class RecipeServiceImpl implements RecipeService {
         recipe = recipeRepo.save(recipe);
 
         for (RecipeIngredientDto dto : request.getIngredients()) {
-            Ingredient ingredient = ingredientRepo.findById(dto.getIngredientId())
+            Ingredient ingredient = ingredientRepo.findById(dto.getIngredient().getId())
                     .orElseThrow(() -> new RuntimeException("Ingredient not found"));
 
             RecipeIngredient ri = RecipeIngredient.builder()
@@ -89,7 +89,7 @@ public class RecipeServiceImpl implements RecipeService {
         List<RecipeIngredient> newIngredients = new ArrayList<>();
 
         for (RecipeIngredientDto dto : request.getIngredients()) {
-            Ingredient ingredient = ingredientRepo.findById(dto.getIngredientId())
+            Ingredient ingredient = ingredientRepo.findById(dto.getIngredient().getId())
                     .orElseThrow(() -> new RuntimeException("Ingredient not found"));
 
             RecipeIngredient ri = RecipeIngredient.builder()

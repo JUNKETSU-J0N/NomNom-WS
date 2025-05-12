@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecipeIngredientDto {
-    private Long ingredientId;
+    private IngredientResponse ingredient;
     private double amount;
     private Unit unit;
 }
