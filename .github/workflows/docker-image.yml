@@ -2,15 +2,87 @@ name: Docker Image CI
 
 on:
   push:
-    branches: 
-    - '*'
+    branches:
+      - '*'
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      db:
+        image: postgres:16.0-alpine
+        environment:
+          POSTGRES_DB: nomnom
+          POSTGRES_USER: nomnom
+          POSTGRES_PASSWORD: nomnom
+          POSTGRES_INITDB_ARGS: "--locale=en_US.UTF-8"
+        ports:
+          - "5433:5432"
+        options: --health-cmd="pg_isready -U nomnom -d nomnom" --health-interval=10s --health-retries=5
+
+      keycloak:
+        image: quay.io/keycloak/keycloak:24.0.1
+        container_name: keycloak
+        command: start-dev --import-realm --features=account2
+        environment:
+          DB_VENDOR: POSTGRES
+          DB_ADDR: jdbc:postgresql://db:5432/nomnom
+          DB_DATABASE: nomnom
+          DB_USER: nomnom
+          DB_PASSWORD: nomnom
+          KEYCLOAK_ADMIN: admin
+          KEYCLOAK_ADMIN_PASSWORD: admin
+        ports:
+          - "8081:8080"
+        depends_on:
+          - db
+        options: --health-cmd="curl -f http://localhost:8080/realms/nomnom" --health-interval=30s --health-retries=3
+
     steps:
-    - name: Checkout aktueller Stand
-      uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      # Schritt 1: Checkout des Repositories
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Schritt 2: Set up Java JDK 17 (oder deine Java Version)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adoptopenjdk'
+
+      # Schritt 3: Abhängigkeiten installieren und Tests ausführen
+      - name: Run Spring Boot tests
+        run: ./mvnw clean test  # Wenn Maven verwendet wird, mit Spring Boot Test-Befehlen
+
+      # Schritt 4: Docker-Cache konfigurieren (optional)
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-docker-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-docker-
+
+      # Schritt 5: Docker-Image bauen
+      - name: Build Docker image
+        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+
+      # Schritt 6: Starten der Docker-Container
+      - name: Run Docker Compose
+        run: |
+          docker-compose -f docker-compose.yml up -d
+
+      # Schritt 7: Warten, bis alle Services hochgefahren sind
+      - name: Wait for services to be available
+        run: |
+          docker exec db sh -c 'until pg_isready -U nomnom -d nomnom; do sleep 1; done'
+          docker exec keycloak sh -c 'until curl -f http://localhost:8080/realms/nomnom; do sleep 1; done'
+
+      # Schritt 8: Tests ausführen
+      - name: Run tests
+        run: ./mvnw test  # Auch die Integrationstests ausführen
+
+      # Schritt 9: Docker-Container herunterfahren
+      - name: Shutdown Docker Compose
+        run: docker-compose down
