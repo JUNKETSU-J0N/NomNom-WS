@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.nomnom.nnws.project.dto.ShoppingItemDto;
 import com.nomnom.nnws.project.dto.ShoppingListRequest;
@@ -25,14 +28,14 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ShoppingListImpl implements ShoppingListService{
+public class ShoppingListImpl implements ShoppingListService {
 
     private final IngredientRepository ingredientRepo;
     private final ShoppingListRepository listrepo;
     private final ShoppingItemRepository itemrepo;
     private final UserRepository userRepo;
     private final ShoppingListMapper mapper;
-    
+
     @Transactional
     @Override
     public ShoppingListResponse createShoppingList(ShoppingListRequest request) {
@@ -41,26 +44,26 @@ public class ShoppingListImpl implements ShoppingListService{
         ShoppingList list = new ShoppingList();
 
         User user = userRepo.findById(request.getUserId())
-            .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
         list.setUser(user);
 
         list = listrepo.save(list);
 
-        for(ShoppingItemDto dto : request.getItems()) {
+        for (ShoppingItemDto dto : request.getItems()) {
             Ingredient ingredient = ingredientRepo.findById(dto.getIngredient().getId())
-                .orElseThrow(() -> new RuntimeException("Ingredient not found"));
+                    .orElseThrow(() -> new RuntimeException("Ingredient not found"));
 
             ShoppingItem item = ShoppingItem.builder()
-                .shoppingList(list)
-                .ingredient(ingredient)
-                .amount(dto.getAmount())
-                .unit(dto.getUnit())
-                .added(dto.isAddad())
-                .build();
+                    .shoppingList(list)
+                    .ingredient(ingredient)
+                    .amount(dto.getAmount())
+                    .unit(dto.getUnit())
+                    .added(dto.isAddad())
+                    .build();
 
             shoppingItems.add(itemrepo.save(item));
         }
-        
+
         list.setItems(shoppingItems);
         return mapper.toResponse(list);
     }
@@ -68,13 +71,16 @@ public class ShoppingListImpl implements ShoppingListService{
     @Override
     public List<ShoppingListResponse> getAllShoppingLists() {
         return listrepo.findAll().stream()
-            .map(mapper::toResponse)
-            .collect(Collectors.toList());
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @Override
     public ShoppingListResponse getByKeycloakId(String keycloakId) {
-    ShoppingList list = listrepo.getByKeycloakId(keycloakId).get(0);
+        ShoppingList list = listrepo.getByKeycloakId(keycloakId).get(0);
+        if (list == null) {
+            throw new RuntimeException("Einkaufsliste nicht gefunden");
+        }
         return mapper.toResponse(list);
     }
 
@@ -92,23 +98,23 @@ public class ShoppingListImpl implements ShoppingListService{
     @Override
     public ShoppingListResponse updateShoppingList(Long id, ShoppingListRequest request) {
         ShoppingList list = listrepo.findById(id)
-            .orElseThrow(() -> new RuntimeException("List not found"));
+                .orElseThrow(() -> new RuntimeException("List not found"));
 
         itemrepo.deleteAll(list.getItems());
-        
+
         List<ShoppingItem> newItems = new ArrayList<>();
 
-        for(ShoppingItemDto dto : request.getItems()) {
+        for (ShoppingItemDto dto : request.getItems()) {
             Ingredient ingredient = ingredientRepo.findById(dto.getIngredient().getId())
-                .orElseThrow(() -> new RuntimeException("Ingredient not found"));
+                    .orElseThrow(() -> new RuntimeException("Ingredient not found"));
 
             ShoppingItem item = ShoppingItem.builder()
-                .shoppingList(list)
-                .ingredient(ingredient)
-                .amount(dto.getAmount())
-                .unit(dto.getUnit())
-                .added(dto.isAddad())
-                .build();
+                    .shoppingList(list)
+                    .ingredient(ingredient)
+                    .amount(dto.getAmount())
+                    .unit(dto.getUnit())
+                    .added(dto.isAddad())
+                    .build();
 
             newItems.add(itemrepo.save(item));
         }

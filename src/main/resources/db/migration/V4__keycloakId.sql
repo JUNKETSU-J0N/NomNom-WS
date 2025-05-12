@@ -1,5 +1,5 @@
 ALTER TABLE app_user ADD COLUMN keycloak_id VARCHAR(255);
 
 UPDATE app_user
-SET keycloak_id = '3efbc9d7-1896-43b7-bea9-e9d4dd8af006'
+SET keycloak_id = '8a5ec4fc-908a-4873-9ae1-cbc4655c33a0'
 WHERE id = 1;
