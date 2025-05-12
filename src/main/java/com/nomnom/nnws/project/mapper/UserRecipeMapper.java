@@ -30,7 +30,6 @@ public class UserRecipeMapper {
             .notes(request.getNotes())
             .evaluation(request.getEvaluation())
             .build();
-            //TODO: funktioniert das?
     }
     
 }

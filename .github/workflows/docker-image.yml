@@ -1,16 +1,30 @@
-name: Docker Image CI
+name: Java CI with Tests
 
 on:
   push:
-    branches: 
-    - '*'
+    branches:
+      - '*'  # Der Workflow wird für alle Pushes in allen Branches ausgeführt
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout aktueller Stand
-      uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      # Schritt 1: Checkout des Repositories
+      - name: Checkout aktueller Stand
+        uses: actions/checkout@v4  # Holt den aktuellen Code aus dem Repository
+
+      # Schritt 2: Setup Java (JDK 17, jetzt mit 'temurin')
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'  # 'temurin' ist die unterstützte Distribution
+
+      # Schritt 3: Installiere Abhängigkeiten und führe Tests aus
+      - name: Build und Tests ausführen
+        run: ./mvnw clean test  # Maven Wrapper (mvnw) verwendet, um Tests auszuführen
+
+      # Optionaler Schritt: Baue das JAR-Paket (wenn gewünscht)
+      - name: Build JAR
+        run: ./mvnw clean package  # Baut die Anwendung (optional)
