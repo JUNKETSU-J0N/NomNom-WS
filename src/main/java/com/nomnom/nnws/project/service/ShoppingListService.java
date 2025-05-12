@@ -8,7 +8,8 @@ import com.nomnom.nnws.project.dto.ShoppingListResponse;
 public interface ShoppingListService {
     ShoppingListResponse createShoppingList(ShoppingListRequest request);
     List<ShoppingListResponse> getAllShoppingLists();
-    ShoppingListResponse getShoppingListById(Long id);
+    ShoppingListResponse getShoppingListById(Long id, String keycloakId);
+    ShoppingListResponse getByKeycloakId(String keycloakId);
     void deleteShoppingList(Long id);
     ShoppingListResponse updateShoppingList(Long id, ShoppingListRequest request);
 }

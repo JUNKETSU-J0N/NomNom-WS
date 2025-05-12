@@ -19,6 +19,7 @@ public class User {
     private String name;
     private String email;
     private String password;
+    private String keycloak_id;
 
     @Enumerated(EnumType.STRING)
     private PreferenceType preference;

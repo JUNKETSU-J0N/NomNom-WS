@@ -73,9 +73,8 @@ public class ShoppingListImpl implements ShoppingListService{
     }
 
     @Override
-    public ShoppingListResponse getShoppingListById(Long id) {
-        ShoppingList list = listrepo.findById(id)
-            .orElseThrow(() -> new RuntimeException("List not found"));
+    public ShoppingListResponse getByKeycloakId(String keycloakId) {
+    ShoppingList list = listrepo.getByKeycloakId(keycloakId).get(0);
         return mapper.toResponse(list);
     }
 
@@ -116,6 +115,12 @@ public class ShoppingListImpl implements ShoppingListService{
 
         list.setItems(newItems);
         return mapper.toResponse(list);
+    }
+
+    @Override
+    public ShoppingListResponse getShoppingListById(Long id, String keycloakId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getShoppingListById'");
     }
 
 }
