@@ -77,10 +77,13 @@ public class ShoppingListImpl implements ShoppingListService {
 
     @Override
     public ShoppingListResponse getByKeycloakId(String keycloakId) {
-        ShoppingList list = listrepo.getByKeycloakId(keycloakId).get(0);
-        if (list == null) {
+
+        List<ShoppingList> lists = listrepo.getByKeycloakId(keycloakId);
+        if (lists == null) {
+
             throw new RuntimeException("Einkaufsliste nicht gefunden");
         }
+        ShoppingList list = lists.get(0);
         return mapper.toResponse(list);
     }
 
