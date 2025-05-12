@@ -11,4 +11,5 @@ public interface UserRecipeService {
     UserRecipeResponse getUserRecipeByUserIdAndRecipeId(Long userId, Long recipeId);
     void deleteUserRecipe(Long userId, Long recipeId);
     UserRecipeResponse updateUserRecipe(Long userId, Long recipeId, UserRecipeRequest request);
+    UserRecipeResponse updateOrCreateUserRecipe(Long userId, Long recipeId, UserRecipeRequest newData);
 }

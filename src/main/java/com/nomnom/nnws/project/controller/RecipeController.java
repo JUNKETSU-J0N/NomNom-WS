@@ -52,5 +52,22 @@ public class RecipeController {
         return ResponseEntity.ok(recipeService.getAllRecipesFilteredAndShuffled(userId));
     }
 
+    @GetMapping("/check-match")
+    public ResponseEntity<List<RecipeResponse>> checkMatch(@RequestParam("userId") Long userId) {
+        return ResponseEntity.ok(recipeService.checkMatch(userId));
+
+    }
+
+
+    @GetMapping("/{id}/hard-reset-evaluations")
+    public ResponseEntity<List<RecipeResponse>> getHardResetAllEvaluations(@PathVariable Long id) {
+        return ResponseEntity.ok(recipeService.getHardResetAllEvaluations(id));
+    }
+
+    @GetMapping("/{id}/soft-reset-evaluations")
+    public ResponseEntity<List<RecipeResponse>> getSoftResetAllEvaluations(@PathVariable Long id) {
+        return ResponseEntity.ok(recipeService.getSoftResetAllEvaluations(id));
+    }
+
 }
 
