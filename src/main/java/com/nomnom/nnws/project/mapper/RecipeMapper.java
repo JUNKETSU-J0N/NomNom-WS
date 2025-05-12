@@ -1,5 +1,6 @@
 package com.nomnom.nnws.project.mapper;
 
+import com.nomnom.nnws.project.dto.IngredientResponse;
 import com.nomnom.nnws.project.dto.RecipeIngredientDto;
 import com.nomnom.nnws.project.dto.RecipeRequest;
 import com.nomnom.nnws.project.dto.RecipeResponse;
@@ -16,7 +17,12 @@ public class RecipeMapper {
     public RecipeResponse toResponse(Recipe recipe) {
         List<RecipeIngredientDto> ingredientDtos = recipe.getIngredients().stream().map(ri ->
                 new RecipeIngredientDto(
-                        ri.getIngredient().getId(),
+                        new IngredientResponse(
+                                ri.getIngredient().getId(),
+                                ri.getIngredient().getName(),
+                                ri.getIngredient().getType(),
+                                ri.getIngredient().getUnit()
+                        ),
                         ri.getAmount(),
                         ri.getUnit()
                 )
