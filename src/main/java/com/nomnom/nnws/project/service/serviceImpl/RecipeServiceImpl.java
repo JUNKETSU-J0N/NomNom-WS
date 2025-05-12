@@ -213,4 +213,38 @@ public class RecipeServiceImpl implements RecipeService {
         List<Recipe> recipes = ur.stream().map(UserRecipe::getRecipe).collect(Collectors.toList());
         return recipes.stream().map(mapper::toResponse).collect(Collectors.toList());
     }
+
+    @Override
+    public List<RecipeResponse> getHardResetAllEvaluations(Long userId) {
+        List<UserRecipe> userRecipes = userRecipeRepo.findByUserIdAndEvaluationIn(userId,
+                List.of(EvaluationValue.LIKE, EvaluationValue.FAVORITE, EvaluationValue.BLOCK, EvaluationValue.DISLIKE));
+
+        for (UserRecipe userRecipe : userRecipes) {
+            userRecipe.setEvaluation(EvaluationValue.NEUTRAL);
+        }
+
+        userRecipeRepo.saveAll(userRecipes);
+
+        return userRecipes.stream()
+                .map(UserRecipe::getRecipe)
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RecipeResponse> getSoftResetAllEvaluations(Long userId) {
+        List<UserRecipe> userRecipes = userRecipeRepo.findByUserIdAndEvaluationIn(userId,
+                List.of(EvaluationValue.LIKE, EvaluationValue.DISLIKE));
+
+        for (UserRecipe userRecipe : userRecipes) {
+            userRecipe.setEvaluation(EvaluationValue.NEUTRAL);
+        }
+
+        userRecipeRepo.saveAll(userRecipes);
+
+        return userRecipes.stream()
+                .map(UserRecipe::getRecipe)
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
+    }
 }

@@ -16,4 +16,6 @@ public interface RecipeService {
 
 
     List<RecipeResponse> checkMatch(Long userId);
+    List<RecipeResponse> getHardResetAllEvaluations(Long userId);
+    List<RecipeResponse> getSoftResetAllEvaluations(Long userId);
 }
