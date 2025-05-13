@@ -15,3 +15,7 @@ ALTER TABLE shopping_list DROP CONSTRAINT IF EXISTS fk_shoppinglist_on_user;
 -- 4. app_user vorbereiten
 ALTER TABLE app_user DROP CONSTRAINT IF EXISTS app_user_pkey;
 ALTER TABLE app_user DROP COLUMN IF EXISTS id;
+ALTER TABLE app_user DROP COLUMN IF EXISTS password;
+ALTER TABLE app_user DROP COLUMN IF EXISTS email;
+ALTER TABLE app_user DROP COLUMN IF EXISTS name;
+
