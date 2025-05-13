@@ -4,6 +4,7 @@ import com.nomnom.nnws.project.dto.RecipeRequest;
 import com.nomnom.nnws.project.dto.RecipeResponse;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface RecipeService {
     RecipeResponse createRecipe(RecipeRequest request);
@@ -12,10 +13,10 @@ public interface RecipeService {
     void deleteRecipe(Long id);
     RecipeResponse updateRecipe(Long id, RecipeRequest request);
     List<RecipeResponse> searchByNameAndDescription(String name);
-    List<RecipeResponse> getAllRecipesFilteredAndShuffled(Long userId);
+    List<RecipeResponse> getAllRecipesFilteredAndShuffled(UUID userId);
 
 
-    List<RecipeResponse> checkMatch(Long userId);
-    List<RecipeResponse> getHardResetAllEvaluations(Long userId);
-    List<RecipeResponse> getSoftResetAllEvaluations(Long userId);
+    List<RecipeResponse> checkMatch(UUID userId);
+    List<RecipeResponse> getHardResetAllEvaluations(UUID userId);
+    List<RecipeResponse> getSoftResetAllEvaluations(UUID userId);
 }

@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public class UserRecipeController {
     }
 
     @GetMapping("/{userId}/{recipeId}")
-    public ResponseEntity<UserRecipeResponse> getById(@PathVariable Long userId, @PathVariable Long recipeId) {
+    public ResponseEntity<UserRecipeResponse> getById(@PathVariable UUID userId, @PathVariable Long recipeId) {
         return ResponseEntity.ok(urService.getUserRecipeByUserIdAndRecipeId(userId, recipeId));
     }
 
@@ -42,12 +43,12 @@ public class UserRecipeController {
 //    }
 
     @PutMapping("/{userId}/{recipeId}")
-    public ResponseEntity<UserRecipeResponse> updateUserRecipe(@PathVariable Long userId, @PathVariable Long recipeId, @RequestBody UserRecipeRequest request) {
+    public ResponseEntity<UserRecipeResponse> updateUserRecipe(@PathVariable UUID userId, @PathVariable Long recipeId, @RequestBody UserRecipeRequest request) {
         return ResponseEntity.ok(urService.updateOrCreateUserRecipe(userId, recipeId, request));
     }
 
     @DeleteMapping("/{userId}/{recipeId}")
-    public ResponseEntity<UserRecipeResponse> deleteById(@PathVariable Long userId, @PathVariable Long recipeId) {
+    public ResponseEntity<UserRecipeResponse> deleteById(@PathVariable UUID userId, @PathVariable Long recipeId) {
         urService.deleteUserRecipe(userId, recipeId);
         return ResponseEntity.noContent().build();
     }

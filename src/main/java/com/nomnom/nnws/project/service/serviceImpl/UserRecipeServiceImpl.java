@@ -1,6 +1,7 @@
 package com.nomnom.nnws.project.service.serviceImpl;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -57,7 +58,7 @@ public class UserRecipeServiceImpl implements UserRecipeService {
     }
 
     @Override
-    public UserRecipeResponse getUserRecipeByUserIdAndRecipeId(Long userId, Long recipeId) {
+    public UserRecipeResponse getUserRecipeByUserIdAndRecipeId(UUID userId, Long recipeId) {
         UserRecipeId urId = new UserRecipeId(userId, recipeId);
         UserRecipe ur = urRepo.findById(urId)
             .orElseThrow(() -> new RuntimeException("Userrecipe not found"));
@@ -65,7 +66,7 @@ public class UserRecipeServiceImpl implements UserRecipeService {
     }
 
     @Override
-    public void deleteUserRecipe(Long userId, Long recipeId) {
+    public void deleteUserRecipe(UUID userId, Long recipeId) {
         UserRecipeId urId = new UserRecipeId(userId, recipeId);
 
         if (!urRepo.existsById(urId)) {
@@ -77,7 +78,7 @@ public class UserRecipeServiceImpl implements UserRecipeService {
 
     @Transactional
     @Override
-    public UserRecipeResponse updateUserRecipe(Long userId, Long recipeId, UserRecipeRequest request) {
+    public UserRecipeResponse updateUserRecipe(UUID userId, Long recipeId, UserRecipeRequest request) {
         UserRecipeId urId = new UserRecipeId(userId, recipeId);
         UserRecipe ur = urRepo.findById(urId)
             .orElseThrow(() -> new RuntimeException("Userrecipe not found"));
@@ -90,7 +91,7 @@ public class UserRecipeServiceImpl implements UserRecipeService {
 
     @Override
     @Transactional
-    public UserRecipeResponse updateOrCreateUserRecipe(Long userId, Long recipeId, UserRecipeRequest newData) {
+    public UserRecipeResponse updateOrCreateUserRecipe(UUID userId, Long recipeId, UserRecipeRequest newData) {
         return urRepo.findById(new UserRecipeId(userId, recipeId))
                 .map(existing -> {
                     // Update bestehender Felder

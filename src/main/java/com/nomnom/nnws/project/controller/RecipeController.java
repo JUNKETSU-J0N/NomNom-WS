@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/recipes")
@@ -48,25 +49,24 @@ public class RecipeController {
     }
 
     @GetMapping("/shuffled")
-    public ResponseEntity<List<RecipeResponse>> getAllShuffled(@RequestParam("userId") Long userId) {
+    public ResponseEntity<List<RecipeResponse>> getAllShuffled(@RequestParam("userId") UUID userId) {
         return ResponseEntity.ok(recipeService.getAllRecipesFilteredAndShuffled(userId));
     }
 
     @GetMapping("/check-match")
-    public ResponseEntity<List<RecipeResponse>> checkMatch(@RequestParam("userId") Long userId) {
+    public ResponseEntity<List<RecipeResponse>> checkMatch(@RequestParam("userId") UUID userId) {
         return ResponseEntity.ok(recipeService.checkMatch(userId));
-
     }
 
 
-    @GetMapping("/{id}/hard-reset-evaluations")
-    public ResponseEntity<List<RecipeResponse>> getHardResetAllEvaluations(@PathVariable Long id) {
-        return ResponseEntity.ok(recipeService.getHardResetAllEvaluations(id));
+    @GetMapping("/{userId}/hard-reset-evaluations")
+    public ResponseEntity<List<RecipeResponse>> getHardResetAllEvaluations(@PathVariable UUID userId) {
+        return ResponseEntity.ok(recipeService.getHardResetAllEvaluations(userId));
     }
 
-    @GetMapping("/{id}/soft-reset-evaluations")
-    public ResponseEntity<List<RecipeResponse>> getSoftResetAllEvaluations(@PathVariable Long id) {
-        return ResponseEntity.ok(recipeService.getSoftResetAllEvaluations(id));
+    @GetMapping("/{userId}/soft-reset-evaluations")
+    public ResponseEntity<List<RecipeResponse>> getSoftResetAllEvaluations(@PathVariable UUID userId) {
+        return ResponseEntity.ok(recipeService.getSoftResetAllEvaluations(userId));
     }
 
 }
