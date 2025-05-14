@@ -4,6 +4,7 @@ import com.nomnom.nnws.project.enums.PreferenceType;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -12,12 +13,9 @@ import java.util.List;
 @Builder
 @Table(name = "app_user")
 public class User {
+
     @Id
-    @GeneratedValue
-    private Long id;
-    private String name;
-    private String email;
-    private String password;
+    private UUID id;
 
     @Enumerated(EnumType.STRING)
     private PreferenceType preference;

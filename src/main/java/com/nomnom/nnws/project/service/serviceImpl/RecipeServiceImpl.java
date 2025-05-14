@@ -14,10 +14,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -162,7 +159,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<RecipeResponse> getAllRecipesFilteredAndShuffled(Long userId) {
+    public List<RecipeResponse> getAllRecipesFilteredAndShuffled(UUID userId) {
         // Alle Rezepte laden
         List<Recipe> allRecipes = recipeRepo.findAll();
 
@@ -208,14 +205,14 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<RecipeResponse> checkMatch(Long userId) {
+    public List<RecipeResponse> checkMatch(UUID userId) {
         List<UserRecipe> ur = this.userRecipeRepo.findByUserIdAndEvaluationIn(userId, List.of(EvaluationValue.LIKE, EvaluationValue.FAVORITE));
         List<Recipe> recipes = ur.stream().map(UserRecipe::getRecipe).collect(Collectors.toList());
         return recipes.stream().map(mapper::toResponse).collect(Collectors.toList());
     }
 
     @Override
-    public List<RecipeResponse> getHardResetAllEvaluations(Long userId) {
+    public List<RecipeResponse> getHardResetAllEvaluations(UUID userId) {
         List<UserRecipe> userRecipes = userRecipeRepo.findByUserIdAndEvaluationIn(userId,
                 List.of(EvaluationValue.LIKE, EvaluationValue.FAVORITE, EvaluationValue.BLOCK, EvaluationValue.DISLIKE));
 
@@ -232,7 +229,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<RecipeResponse> getSoftResetAllEvaluations(Long userId) {
+    public List<RecipeResponse> getSoftResetAllEvaluations(UUID userId) {
         List<UserRecipe> userRecipes = userRecipeRepo.findByUserIdAndEvaluationIn(userId,
                 List.of(EvaluationValue.LIKE, EvaluationValue.DISLIKE));
 

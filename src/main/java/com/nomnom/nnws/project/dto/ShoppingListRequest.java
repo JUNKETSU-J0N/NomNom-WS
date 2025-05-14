@@ -1,6 +1,7 @@
 package com.nomnom.nnws.project.dto;
 
 import java.util.List;
+import java.util.UUID;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShoppingListRequest {
-    private Long userId;
+    private UUID userId;
     private List<ShoppingItemDto> items;
 }

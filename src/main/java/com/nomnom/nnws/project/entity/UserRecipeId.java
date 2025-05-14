@@ -1,6 +1,8 @@
 package com.nomnom.nnws.project.entity;
 
 import java.io.Serializable;
+import java.util.UUID;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRecipeId implements Serializable {
-    private Long user;
+    private UUID user;
     private Long recipe;
 }

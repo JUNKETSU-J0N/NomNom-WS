@@ -7,12 +7,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRecipeResponse {
     private UserRecipeId urId;
-    private Long userId;
+    private UUID userId;
     private Long recipeId;
     private String notes;
     private EvaluationValue evaluation;
