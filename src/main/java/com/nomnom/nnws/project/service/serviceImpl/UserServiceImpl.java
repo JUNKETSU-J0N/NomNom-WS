@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
                 .orElseGet(() -> {
                     User newUser = User.builder()
                             .id(id)
-                            .preference(null)
+                            .preference(PreferenceType.NONE)
                             .build();
                     User savedUser = userRepository.save(newUser);
                     return UserMapper.toDto(savedUser);
