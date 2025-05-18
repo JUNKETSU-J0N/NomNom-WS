@@ -2,6 +2,8 @@ package com.nomnom.nnws.project.controller;
 
 import com.nomnom.nnws.project.dto.UserDto;
 import com.nomnom.nnws.project.service.UserService;
+import com.nomnom.nnws.project.dto.PreferenceRequest;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,4 +44,12 @@ public class UserController {
         return ResponseEntity.ok(userService.getOrCreateUser(id));
     }
 
-}
+    @PutMapping("/{id}/preference")
+    public ResponseEntity<UserDto> updatePreference(
+            @PathVariable UUID id,
+            @RequestBody PreferenceRequest preferenceRequest
+    ) {
+        UserDto user = userService.updatePreference(id, preferenceRequest.getPreference());
+        return ResponseEntity.ok(user);
+    }
+}    

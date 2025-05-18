@@ -1,8 +1,9 @@
 package com.nomnom.nnws.project.enums;
 
 public enum PreferenceType {
-    VEGETARIAN,
+    NONE,
     VEGAN,
+    VEGETARIAN,
     MEAT_LOVER,
     PESCATARIAN,
     HIGH_PROTEIN

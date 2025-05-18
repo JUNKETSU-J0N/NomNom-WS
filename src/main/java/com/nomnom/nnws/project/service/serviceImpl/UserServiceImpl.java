@@ -6,6 +6,8 @@ import com.nomnom.nnws.project.enums.PreferenceType;
 import com.nomnom.nnws.project.mapper.UserMapper;
 import com.nomnom.nnws.project.repository.UserRepository;
 import com.nomnom.nnws.project.service.UserService;
+
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -52,11 +54,19 @@ public class UserServiceImpl implements UserService {
                 .orElseGet(() -> {
                     User newUser = User.builder()
                             .id(id)
-                            .preference(PreferenceType.MEAT_LOVER)
+                            .preference(PreferenceType.NONE)
                             .build();
                     User savedUser = userRepository.save(newUser);
                     return UserMapper.toDto(savedUser);
                 });
     }
 
+    @Override
+    public UserDto updatePreference(UUID id, PreferenceType preference) {
+        User user = userRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
+        user.setPreference(preference);
+        User saved = userRepository.save(user);
+        return UserMapper.toDto(saved);
+    }
 }
