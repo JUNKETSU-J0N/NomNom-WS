@@ -1,17 +1,15 @@
 package com.nomnom.nnws.project.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.nomnom.nnws.project.dto.ShoppingItemDto;
 import com.nomnom.nnws.project.dto.ShoppingListRequest;
 import com.nomnom.nnws.project.dto.ShoppingListResponse;
 import com.nomnom.nnws.project.service.ShoppingListService;
-
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -20,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 public class ShoppingListController {
 
     private final ShoppingListService listService;
+
+    
 
     @PostMapping
     public ResponseEntity<ShoppingListResponse> create(@RequestBody ShoppingListRequest request) {
@@ -32,19 +32,30 @@ public class ShoppingListController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ShoppingListResponse> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(listService.getShoppingListById(id));
-    }
+    public ResponseEntity<ShoppingListResponse> getById(@PathVariable UUID id) {  
+        return ResponseEntity.ok(listService.getShoppingListByUserId(id));}
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ShoppingListResponse> updateList(@PathVariable Long id, @RequestBody ShoppingListRequest request) {
-        return ResponseEntity.ok(listService.updateShoppingList(id, request));
-    }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteList(@PathVariable Long id) {
-        listService.deleteShoppingList(id);
+    @PutMapping("/{userId}/items")
+public ResponseEntity<Void> addItemToList(@PathVariable UUID userId, @RequestBody ShoppingItemDto itemRequest) {
+    listService.addItemToShoppingList(userId, itemRequest);
+    return ResponseEntity.ok().build();}
+    
+
+    @DeleteMapping("/reset/{userId}")
+    public ResponseEntity<Void> deleteList( @PathVariable UUID userId) {
+        listService.deleteShoppingList(userId);
         return ResponseEntity.noContent().build();
     }
-    
+
+        @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
+        listService.deleteShoppingItem(id);
+        return ResponseEntity.noContent().build();
+    }
+            @PutMapping("/update/items")
+    public ResponseEntity<Void> updateItem(@RequestBody ShoppingItemDto itemRequest){
+        listService.updateShoppingItem(itemRequest);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -15,5 +15,5 @@ public class ShoppingItemDto {
     private IngredientResponse ingredient;
     private double amount;
     private Unit unit;
-    private boolean addad;
+    private boolean added;
 }
