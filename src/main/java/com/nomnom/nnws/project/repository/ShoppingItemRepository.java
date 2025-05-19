@@ -12,5 +12,5 @@ public interface ShoppingItemRepository extends JpaRepository<ShoppingItem, Long
     @Modifying
     @Query("DELETE FROM ShoppingItem item WHERE item.shoppingList.id = :shoppingListId")
     void deleteAllByShoppingListId(@Param("shoppingListId") Long shoppingListId);
-    
+
 }

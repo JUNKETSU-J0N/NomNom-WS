@@ -15,7 +15,7 @@ import java.util.List;
 @Builder
 public class ShoppingList {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
